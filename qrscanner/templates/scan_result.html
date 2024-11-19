@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Scan Result</title>
+    <!-- Include static files using Django template tags -->
+    <link rel="stylesheet" type="text/css" href="{% static 'your_app/styles.css' %}">
+</head>
+<body>
+    <h1>QR Code Scan Result</h1>
+    <p>Teacher: {{ teacher }}</p>
+    <p>Classroom: {{ classroom }}</p>
+    <p>Timestamp: {{ timestamp }}</p>
+</body>
+</html>

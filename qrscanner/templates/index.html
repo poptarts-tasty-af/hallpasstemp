@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time QR Scanner</title>
+    <!-- Include static files using Django template tags -->
+    <link rel="stylesheet" type="text/css" href="{% static 'your_app/styles.css' %}">
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+</head>
+<body>
+    <h1>QR Code Scanner</h1>
+    <button id="start-button" onclick="startScanning()">Start Scanning</button>
+    <div id="scanner"></div>
+    <div id="result"></div>
+
+    <script>
+        // Initialize the scanner
+        let scanner;
+
+        function startScanning() {
+            const scannerElement = document.getElementById('scanner');
+            const resultElement = document.getElementById('result');
+
+            // Initialize the QR scanner
+            scanner = new Html5Qrcode("scanner");
+
+            scanner.start(
+                { facingMode: "environment" },
+                {
+                    fps: 10,
+                    qrbox: 250
+                },
+                (decodedText, decodedResult) => {
+                    // Show the result
+                    console.log(decodedText);
+                    resultElement.innerHTML = `QR Code Detected: ${decodedText}`;
+                },
+                (errorMessage) => {
+                    console.error(errorMessage);
+                }
+            ).catch((err) => {
+                alert(`Error: ${err}`);
+            });
+        }
+
+        function stopScanning() {
+            if (scanner) {
+                scanner.stop().then(() => {
+                    console.log("Scanning stopped.");
+                }).catch((err) => {
+                    console.error("Error stopping the scanner:", err);
+                });
+            }
+        }
+
+        setTimeout(stopScanning, 30000); // Stop after 30 seconds
+    </script>
+</body>
+</html>
